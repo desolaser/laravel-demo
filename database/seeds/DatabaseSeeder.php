@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             'users',
             'cotizaciones',
             'det_cotizaciones',
+            'notas',
             // ??? TRUNCATE ES PARA ELIMINAR LOS DATOS DE LA TABLA
         ]);
 
@@ -33,6 +34,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             CotizacionSeeder::class,
             DetCotizacionSeeder::class,
+            NotaSeeder::class
         ]);
     }
 

@@ -45,7 +45,7 @@ class HomeController extends Controller
         ]);
     }
 
-    public function getDashboardData() 
+    public function getDashboardData()
     {
         $user = Auth::user();
         $cotizaciones = Cotizacion::all();
@@ -69,14 +69,9 @@ class HomeController extends Controller
         $cotizacion = Cotizacion::where('id', $id)->first();
         $cotizacion->status = 'EN_VALIDACIÓN';
         $cotizacion->save();
-        $seguimiento = new Seguimiento();
-        $seguimiento->cotizacion_id = $id;
-        $seguimiento->status = 'EN_VALIDACION';
-        $seguimiento->usuario = $aprobador;
-        $seguimiento->save();
         return redirect('/');
     }
-    
+
     public function aprove($id)
     {
         $user = Auth::user();
@@ -84,14 +79,9 @@ class HomeController extends Controller
         $cotizacion = Cotizacion::where('id', $id)->first();
         $cotizacion->status = 'POR_ENVIAR';
         $cotizacion->save();
-        $seguimiento = new Seguimiento();
-        $seguimiento->cotizacion_id = $id;
-        $seguimiento->status = 'POR_ENVIAR';
-        $seguimiento->usuario = $aprobador;
-        $seguimiento->save();
         return redirect('/');
     }
-    
+
     public function cancel($id)
     {
         $user = Auth::user();
@@ -99,11 +89,6 @@ class HomeController extends Controller
         $cotizacion = Cotizacion::where('id', $id)->first();
         $cotizacion->status = 'ANULADO-INTERNO';
         $cotizacion->save();
-        $seguimiento = new Seguimiento();
-        $seguimiento->cotizacion_id = $id;
-        $seguimiento->status = 'ANULADO-INTERNO';
-        $seguimiento->usuario = $aprobador;
-        $seguimiento->save();
         return redirect('/');
     }
 
@@ -114,26 +99,16 @@ class HomeController extends Controller
         $cotizacion = Cotizacion::where('id', $id)->first();
         $cotizacion->status = 'RECHAZADO-EXTERNO';
         $cotizacion->save();
-        $seguimiento = new Seguimiento();
-        $seguimiento->cotizacion_id = $id;
-        $seguimiento->status = 'RECHAZADO-EXTERNO';
-        $seguimiento->usuario = $aprobador;
-        $seguimiento->save();
         return redirect('/');
     }
-        
+
     public function operations($id)
     {
         $user = Auth::user();
         $aprobador = $user->name;
         $cotizacion = Cotizacion::where('id', $id)->first();
-        $cotizacion->status = 'OPERACIONES';
+        $cotizacion->status = 'FACTURACIÓN';
         $cotizacion->save();
-        $seguimiento = new Seguimiento();
-        $seguimiento->cotizacion_id = $id;
-        $seguimiento->status = 'OPERACIONES';
-        $seguimiento->usuario = $aprobador;
-        $seguimiento->save();
         return redirect('/');
     }
 }
