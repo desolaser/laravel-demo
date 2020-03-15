@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\{Cotizacion, DetCotizacion, Seguimiento, Trabajo, Gasto};
+use App\{Cotizacion, DetCotizacion, Trabajo, Gasto};
 use Barryvdh\DomPDF\Facade as PDF;
 use Mail;
 use Auth;
@@ -25,7 +25,7 @@ class ReportController extends Controller
     {
         $cotizacion = Cotizacion::where('id', $id)->first();
         $productos = DetCotizacion::where('cotizacion_id', $cotizacion->id)->get();
-        
+
         foreach ($productos as $item) {
             $item->precio = number_format($item->precio, '0', ',', '.');
             $item->total = number_format($item->total, '0', ',', '.');
@@ -42,16 +42,16 @@ class ReportController extends Controller
             'data' => $cotizacion,
             'productos' => $productos,
         ]);
-        
+
         $filename = 'cotizacion-'.$id.'.pdf';
         return $pdf->download($filename);
     }
-    
+
     public function send($id)
     {
         $cotizacion = Cotizacion::where('id', $id)->first();
         $productos = DetCotizacion::where('cotizacion_id', $cotizacion->id)->get();
-        
+
         foreach ($productos as $item) {
             $item->precio = number_format($item->precio, '0', ',', '.');
             $item->total = number_format($item->total, '0', ',', '.');
@@ -68,18 +68,13 @@ class ReportController extends Controller
             'data' => $cotizacion,
             'productos' => $productos,
         ]);
-        
+
         $user = Auth::user();
         $aprobador = $user->name;
-        
+
         $cotizacion = Cotizacion::where('id', $id)->first();
         $cotizacion->status = 'EVALUACIÓN_CLIENTE';
         $cotizacion->save();
-        $seguimiento = new Seguimiento();
-        $seguimiento->cotizacion_id = $id;
-        $seguimiento->status = 'EVALUACIÓN_CLIENTE';
-        $seguimiento->usuario = $aprobador;
-        $seguimiento->save();
 
         $contacto_email = $cotizacion->contacto->email;
         $data = array(
@@ -91,7 +86,7 @@ class ReportController extends Controller
         $asunto = 'Cotización N° '.$cotizacion->id;
 
         //$archivos = Storage::disk('local');
-        
+
         //use ($contacto_email,$pdf,$copia_oculta)
         Mail::send('emails.welcome', $data, function ($message) use ($contacto_email, $pdf, $asunto) {
             $message->from('cualquiercosalguienalgo@gmail.com', 'Digitador');
@@ -101,26 +96,26 @@ class ReportController extends Controller
             $message->attachData($pdf->output(), "Cotizacion.pdf");
          //   $message->attachData($archivos," ");
         });
-        
+
         return redirect()->to('/')
                 ->with('success', 'Tu email ha sido enviado correctamente');
     }
 
     public function uploadSpecialData(Request $request)
     {
-        if($request->ajax()){        
+        if($request->ajax()){
             $file = $request->file('archivo');
             Storage::disk('local')->put(
                 $request->carpeta."/".$file->getClientOriginalName(),
                 file_get_contents($file->getRealPath())
             );
-            
+
             $files = Storage::disk('local')->files($request->carpeta);
             $filenames = array();
             foreach ($files as $item) {
-                $data = Storage::disk('local')->get($item);   
+                $data = Storage::disk('local')->get($item);
                 $split = explode("/", $item);
-                $name = $split[1];             
+                $name = $split[1];
                 array_push($filenames, $name);
             }
             return view('admin.specialFiles', [
@@ -135,11 +130,11 @@ class ReportController extends Controller
             $folder = $request->folder;
             $filename = $request->name;
             Storage::disk('local')->delete($folder.'/'.$filename);
-            
+
             $files = Storage::disk('local')->files($request->folder);
             $filenames = array();
             foreach ($files as $item) {
-                $data = Storage::disk('local')->get($item);   
+                $data = Storage::disk('local')->get($item);
                 $split = explode("/", $item);
                 $name = $split[1];
                 array_push($filenames, $name);
@@ -149,7 +144,7 @@ class ReportController extends Controller
             ]);
         }
     }
-    
+
     public function sendSpecialData(Request $request)
     {
         if($request->ajax()){
@@ -158,21 +153,16 @@ class ReportController extends Controller
 
             $user = Auth::user();
             $aprobador = $user->name;
-            
+
             $cotizacion->status = 'OPERACIONES';
             $cotizacion->save();
-            $seguimiento = new Seguimiento();
-            $seguimiento->cotizacion_id = $request->cotizacion_id;
-            $seguimiento->status = 'OPERACIONES';
-            $seguimiento->usuario = $aprobador;
-            $seguimiento->save();
 
             $data = array(
                 'name' => "Curso Laravel",
                 'cotizacion' => $cotizacion,
             );
 
-            $contacto_email = $cotizacion->contacto->email;            
+            $contacto_email = $cotizacion->contacto->email;
             $pdf = PDF::loadView('pdf.report', [
                 'data' => $cotizacion,
                 'productos' => $productos,
@@ -180,7 +170,7 @@ class ReportController extends Controller
             $carpeta = $request->carpeta_envio;
             $asunto = 'Cotización N° '.$cotizacion->id;
 
-            Mail::send('emails.welcome', $data, function ($message) use ($contacto_email, $pdf, $carpeta, $asunto) {    
+            Mail::send('emails.welcome', $data, function ($message) use ($contacto_email, $pdf, $carpeta, $asunto) {
                 $message->from('cualquiercosalguienalgo@gmail.com', 'Digitador');
                 $message->to($contacto_email)->subject($asunto);
                 $message->attachData($pdf->output(), "Cotizacion.pdf");
@@ -202,20 +192,20 @@ class ReportController extends Controller
             return 1;
         }
     }
-    
+
     public function workReport($id)
     {
         $trabajos = Trabajo::where('cotizacion_id', $id)->get();
-        
+
         $pdf = PDF::loadView('pdf.workReport', [
             'data' => $trabajos,
             'id' => $id
         ]);
 
         $filename = 'reporte-trabajo-cotizacion-'.$id.'.pdf';
-        return $pdf->download($filename);        
+        return $pdf->download($filename);
     }
-    
+
     public function costReport($id)
     {
         $trabajos = Trabajo::where('cotizacion_id', $id)->get();
@@ -224,7 +214,7 @@ class ReportController extends Controller
             $gastos = Gasto::where('trabajo_id', $item->id)->get();
             array_push($data, $gastos);
         }
-        
+
         $pdf = PDF::loadView('pdf.costReport', [
             'data' => $data,
             'trabajos' => $trabajos,
@@ -232,6 +222,6 @@ class ReportController extends Controller
         ]);
 
         $filename = 'reporte-gastos-cotizacion-'.$id.'.pdf';
-        return $pdf->download($filename);        
+        return $pdf->download($filename);
     }
 }
