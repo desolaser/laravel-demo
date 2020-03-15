@@ -1,0 +1,21 @@
+.table thead th .oi {
+  font-size: 8px;
+  display: none;
+  color: #8eb4cb;
+  margin: 0 0 0 12px;
+  -webkit-transform: translateY(-2px);
+          transform: translateY(-2px);
+}
+
+.table thead th.sort-asc .oi-caret-top {
+  display: inline-block;
+}
+
+.table thead th.sort-desc .oi-caret-bottom {
+  display: inline-block;
+}
+
+.excelButton {
+  display: inline-block;
+  margin-left: 20px;
+}

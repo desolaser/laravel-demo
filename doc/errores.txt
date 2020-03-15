@@ -1,0 +1,50 @@
+Warning in ./libraries/sql.lib.php#613
+ count(): Parameter must be an array or an object that implements Countable
+
+Backtrace
+
+./libraries/sql.lib.php#2128: PMA_isRememberSortingOrder(array)
+./libraries/sql.lib.php#2079: PMA_executeQueryAndGetQueryResponse(
+
+Edit file /usr/share/phpmyadmin/libraries/sql.lib.php:
+
+sudo nano /usr/share/phpmyadmin/libraries/sql.lib.php
+On line 613 the count function always evaluates to true since there is no closing parenthesis after $analyzed_sql_results['select_expr']. Making the below replacements resolves this, then you will need to delete the last closing parenthesis on line 614, as it's now an extra parenthesis.
+
+Replace:
+
+((empty($analyzed_sql_results['select_expr']))
+    || (count($analyzed_sql_results['select_expr'] == 1)
+        && ($analyzed_sql_results['select_expr'][0] == '*')))
+With:
+
+((empty($analyzed_sql_results['select_expr']))
+    || (count($analyzed_sql_results['select_expr']) == 1)
+        && ($analyzed_sql_results['select_expr'][0] == '*'))
+Restart the server apache:
+
+sudo service apache2 restart
+
+------------------------------------------------------------
+Warning in ./libraries/plugin_interface.lib.php#551
+ count(): Parameter must be an array or an object that implements Countable
+
+Backtrace
+
+./libraries/display_export.lib.php#381: PMA_pluginGetOptions(
+string 'Export',
+array,
+)
+
+couse of phpmyadmin’s library try to count some parameter. At this line 532, I found this code in this path
+
+$ /usr/share/phpmyadmin/libraries/plugin_interface.lib.php
+
+if ($options != null && count($options) > 0) {
+i think in new php version.It can’t use count() or sizeof() with un array type. Force parameter to array is easy way to solve this bug, Like This
+
+if ($options != null && count((array)$options) > 0) {
+
+May this trick help your code.
+
+PHP

@@ -1,0 +1,47 @@
+php artisan make:migration create_empresas_table
+php artisan make:model Empresa
+
+php artisan make:controller NombreControlador –r
+php artisan make:request CreateUserRequest
+
+php artisan make:model Todo -mcr
+
+php artisan make:seeder UserSeeder
+
+php artisan db:seed --class=BookSeeder de manera individual
+
+php artisan make:fact EmpresaFactory --model=Emprersa
+
+php artisan db:seed --class=NombreDelSeeder
+
+Traducciones
+composer require caouecs/laravel-lang:dev-laravel58
+directroio	es
+archivo 	es.json
+
+public function run()
+{
+    Model::unguard();
+
+     $this->call(BookSeeder::class);
+     $this->call(ReviewsSeeder::class);
+
+    Model::reguard();
+}
+
+Nota: Los métodos de Model unguard() y reguard() sirven para anular temporalmente y luego reactivar ciertas protecciones de seguridad en el modelo, que evitan que te inyecten datos indeseados en las tablas. Hablaremos más adelante de ellas.
+
+Route::match(['get', 'post'], '/ruta', 'SearchController@getSearch')->name('post');
+
+Para permitir múltiples verbos:
+
+Route::match(['get', 'post'], '/getSearch', 'SearchController@getSearch')->name('post');
+Sí quiere permitir solo post
+
+Route::post('/getSearch', 'SearchController@getSearch')->name('post');
+Sí quiere permitir solo get
+
+Route::get('/getSearch', 'SearchController@getSearch')->name('post');
+
+
+
