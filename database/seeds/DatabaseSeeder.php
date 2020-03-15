@@ -17,16 +17,11 @@ class DatabaseSeeder extends Seeder
             'productos',
             'empresas',
             'precios_empresas',
-            'centros',
             'contactos',
             'users',
             'cotizaciones',
             'det_cotizaciones',
-            'facturas',
-            'movimientos',
-            'transferencias',
-           // 'seguimiento_cotizaciones',
-            //tipo_usuario, ??? TRUNCATE ES PARA ELIMINAR LOS DATOS DE LA TABLA
+            // ??? TRUNCATE ES PARA ELIMINAR LOS DATOS DE LA TABLA
         ]);
 
         $this->call([
@@ -34,16 +29,10 @@ class DatabaseSeeder extends Seeder
             CategoriaSeeder::class,
             ProductoSeeder::class,
             EmpresaSeeder::class,
-            CentroSeeder::class,
             ContactoSeeder::class,
             UserSeeder::class,
-            TransferenciaSeeder::class,
-            FacturaSeeder::class,
-            MovimientoSeeder::class,
             CotizacionSeeder::class,
             DetCotizacionSeeder::class,
-          //  SeguimientoSeeder::class,
-            //TipoUsuarioSeeder::class,
         ]);
     }
 
