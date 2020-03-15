@@ -3,7 +3,7 @@
 @section('content')
 <h1>Dashboard</h1>
 <div class="table-responsive">
-    <div style="width: 72%; float:left;">
+    <div class="col-sm-12">
         <p id="date_filter">
             <span id="date-label-from" class="date-label">Desde: </span><input class="date_range_filter date" type="text" id="datepicker_from" />
             <span id="date-label-to" class="date-label">Hasta: </span><input class="date_range_filter date" type="text" id="datepicker_to" />
@@ -29,7 +29,7 @@
                         <form action="{{ route('cotizaciones.destroy', $item->id) }}" method="POST">
                             @csrf
                             @method('DELETE')
-                            @if (($role == 'DIGITADOR_CIG' || $role == 'DIGITADOR_CIM' || $role == 'SUPERUSUARIO') && 
+                            @if (($role == 'DIGITADOR_CIG' || $role == 'DIGITADOR_CIM' || $role == 'SUPERUSUARIO') &&
                                     $item->status == 'EN_DISEÑO')
                                 <a class="btn btn-primary" href="{{ url("dashboard/send/{$item->id}") }}">
                                 <i class="icon-shopping-cart icon-large"></i> Enviar a Supervisor</a>
@@ -154,7 +154,7 @@
                 cache: false,
                 contentType: false,
                 processData: false,
-                success: function (html) {           
+                success: function (html) {
                     $("#special-files").empty();
                     $("#special-files").html(html);
                     alert("Archivo agregado exitosamente");
@@ -164,10 +164,10 @@
                 }
             });
         });
-        
+
         $("#sendSpecialData").on("submit", function(e){
             e.preventDefault();
-            var formData = new FormData(document.getElementById("sendSpecialData"));            
+            var formData = new FormData(document.getElementById("sendSpecialData"));
             var token = '{{csrf_token()}}';
             formData.append("_token", token);
             $.ajax({
