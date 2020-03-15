@@ -9,7 +9,6 @@
                     <tr>
 			            <th scope="col">#</th>
 			            <th scope="col">Empresa</th>
-			            <th scope="col">Centro</th>
 			            <th scope="col">Nombre</th>
 			            <th scope="col">Cargo</th>
 			            <th scope="col">Zona</th>
@@ -19,13 +18,12 @@
 			            <th scope="col">Acciones</th>
 			        </tr>
                 </thead>
-                
+
                 <tbody>
                    @foreach($data as $items)
 			            <tr>
 			                <th scope="row">{{ $items->id }}</th>
 			                <td>{{ $items->empresa->nombre }}</td>
-			                <td>{{ $items->centro->nombre }}</td>
 			                <td>{{ $items->nombre }}</td>
 			                <td>{{ $items->cargo }}</td>
 			                <td>{{ $items->zona }}</td>
@@ -36,7 +34,7 @@
 			                	<form action="{{ route('contactos.destroy', $items->id) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
-                                    
+
                                     <a href="{{ route('contactos.edit', $items->id) }}"">
                                         <span class="oi oi-pencil"></span>
                                     </a>
@@ -49,7 +47,7 @@
 			            </tr>
 			        @endforeach
                 </tbody>
-                
+
                 <tfoot>
 	                <tr>
 			            <th scope="col">#</th>
@@ -68,4 +66,3 @@
         </div>
     </div>
 @stop
-

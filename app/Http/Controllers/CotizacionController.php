@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\{Cotizacion, DetCotizacion, Empresa, Centro, Contacto, Servicio, PrecioEmpresa, Temp, Nota, Seguimiento};
+use App\{Cotizacion, DetCotizacion, Empresa, Contacto, Servicio, PrecioEmpresa, Temp, Nota, Seguimiento};
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use DB;
@@ -73,7 +73,6 @@ class CotizacionController extends Controller
 
         $this->validate($request, [
             'empresa_id' => 'required',
-            'centro_id' => 'required',
             'contacto_id' => 'required',
             'viatico' => 'min:0',
             'descuento' => 'min:0',
@@ -89,7 +88,6 @@ class CotizacionController extends Controller
             $cotizacion = new Cotizacion;
 
             $cotizacion->empresa_id = $request->empresa_id;
-            $cotizacion->centro_id = $request->centro_id;
             $cotizacion->contacto_id = $request->contacto_id;
             $cotizacion->nota = $request->nota;
             $cotizacion->viatico = $request->viatico;
@@ -212,7 +210,6 @@ class CotizacionController extends Controller
     {
         $data = $this->validate($request, [
             'empresa_id' => 'required',
-            'centro_id' => 'required',
             'contacto_id' => 'required',
             'nota' => 'min:0',
             'viatico' => 'min:0',
@@ -230,7 +227,6 @@ class CotizacionController extends Controller
         try {
             $cotizacion = Cotizacion::where('id', $id)->first();
             $cotizacion->empresa_id = $data['empresa_id'];
-            $cotizacion->centro_id = $data['centro_id'];
             $cotizacion->contacto_id = $data['contacto_id'];
             $cotizacion->nota = $data['nota'];
             $cotizacion->viatico = $data['viatico'];
@@ -300,16 +296,9 @@ class CotizacionController extends Controller
         }
     }
 
-    public function getCentros(Request $request) {
-        if($request->ajax()) {
-            $centros = Centro::where('empresa_id', $request->empresa_id)->get();
-            return Response::json($centros);
-        }
-    }
-
     public function getContactos(Request $request) {
         if($request->ajax()) {
-            $contactos = Contacto::where('centro_id', $request->centro_id)->get();
+            $contactos = Contacto::where('empresa_id', $request->empresa_id)->get();
             return Response::json($contactos);
         }
     }

@@ -23,15 +23,6 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="nombre" class="col-sm-2 control-label">Centro</label>
-
-                        <div class="col-sm-10">
-                            <select name="centro_id" id="centro_id" class="form-control">
-                                <option value="">Seleccione centro</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
                         <label for="nombre" class="col-sm-2 control-label">Contacto</label>
 
                         <div class="col-sm-10">
@@ -105,90 +96,7 @@
                 </table>
             </div>
         </form>
-
-        @if($cotizacion->status == "OPERACIONES" || $cotizacion->status == "FACTURACIÓN" ||
-                $cotizacion->status == "FACTURA_EMITIDA")
-            <div class="panel panel-primary col-sm-6">
-                <div class="panel-heading">Control ingreso a la empresa</div>
-                <div class="panel-body">
-                    @if (Auth::user()->role == 'DIGITADOR_CIG' || Auth::user()->role == 'SUPERUSUARIO')
-                        <a style="margin: 10px" class="btn btn-primary" id="works" href="#" >
-                            Ver Trabajos
-                        </a>
-                    @else
-                        <a style="margin: 10px" class="btn btn-primary" disabled>
-                            Ver Trabajos
-                        </a>
-                    @endif
-                </div>
-            </div>
-          	<div class="panel panel-primary col-md-6">
-            		<div class="panel-heading">Resumen acumulado productos e insumos</div>
-            		<div class="panel-body">
-                      @if (Auth::user()->role == 'DIGITADOR_CIM' || Auth::user()->role == 'DIGITADOR_IM' ||
-                              Auth::user()->role == 'SUPERUSUARIO')
-                          <a style="margin: 10px" class="btn btn-primary" id="materials" href="#">
-                              Añade materiales
-                          </a>
-                      @else
-                          <a style="margin: 10px" class="btn btn-primary" disabled>
-                              Añade materiales
-                          </a>
-                      @endif
-            		</div>
-          	</div>
-          	<div class="panel panel-primary col-md-6">
-            		<div class="panel-heading">Visualización de datos técnicos</div>
-            		<div class="panel-body">
-                      @if (Auth::user()->role == 'DIGITADOR_DT' || Auth::user()->role == 'SUPERUSUARIO')
-                          <a style="margin: 10px" class="btn btn-primary" id="tecnicos" href="#">
-                              Ver Datos Técnicos
-                          </a>
-                      @else
-                          <a style="margin: 10px" class="btn btn-primary" disabled>
-                              Ver Datos Técnicos
-                          </a>
-                      @endif
-            		</div>
-          	</div>
-          	<div class="panel panel-primary col-md-6">
-            		<div class="panel-heading">Gastos de operación en terreno</div>
-            		<div class="panel-body">
-                      <div id="gastos_totales">
-                      </div>
-                      @if (Auth::user()->role == 'DIGITADOR_CIG' || Auth::user()->role == 'SUPERUSUARIO')
-                          <a style="margin: 10px" class="btn btn-primary" id="costs" href="#">
-                              Ver Gastos
-                          </a>
-                      @else
-                          <a style="margin: 10px" class="btn btn-primary" disabled>
-                              Ver Gastos
-                          </a>
-                      @endif
-            		</div>
-          	</div>
-          	<div class="panel panel-danger col-xs-12">
-            		<div class="panel-heading">Zona de adjuntos</div>
-            		<div class="panel-body">
-                    <div id="files">
-                    </div>
-            		</div>
-          	</div>
-          	<div class="panel panel-success col-xs-12">
-            		<div class="panel-heading">Zona de chat/foro</div>
-            		<div class="panel-body">
-                    <div id="posts">
-                    </div>
-            		</div>
-          	</div>
-          	<div class="panel panel-primary col-md-9">
-            		<div class="panel-heading">Datos del centro</div>
-            		<div class="panel-body" id="info_centro">
-          		  Nombre y correo encargado, CEL, otro
-            		</div>
-          	</div>
-        </div>
-    @endif
+    </div>
 
     <!-- Modal de Productos -->
     <div class="modal fade" id="modal-productos">
@@ -267,30 +175,10 @@
 
 @section('script')
     <script>
-        function actualizar_centros(async) {
+        function actualizar_contactos(async) {
             var empresa_id = $('#empresa_id').val();
             var token = '{{csrf_token()}}';
             var data = {empresa_id: empresa_id, _token: token};
-
-            $.ajax({
-                type: "post",
-                url: "{{ url('cotizaciones/getCentros/') }}",
-                data: data,
-                async: async,
-                success: function (data) {
-                    $("#centro_id").empty();
-                    $("#centro_id").append('<option value="">Seleccione centro</option>');
-                    $.each(data, function(i, item){
-                        $("#centro_id").append('<option value='+data[i].id+'>'+data[i].nombre+'</option>');
-                    })
-                }
-            });
-        }
-
-        function actualizar_contactos(async) {
-            var centro_id = $('#centro_id').val();
-            var token = '{{csrf_token()}}';
-            var data = {centro_id: centro_id, _token: token};
 
             $.ajax({
                 type: "post",
@@ -307,78 +195,6 @@
             });
         }
 
-        function actualizar_datos() {
-            var cotizacion_id = $('#cotizacion_id').val();
-            if (cotizacion_id == "") return;
-            $('#file_cotizacion_id').val(cotizacion_id);
-            $('#post_cotizacion_id').val(cotizacion_id);
-            $('#materials').attr("href", "/materiales/index/"+cotizacion_id);
-            $('#works').attr("href", "/trabajos/index/"+cotizacion_id);
-            $('#costs').attr("href", "/gastos/index/"+cotizacion_id);
-            $('#tecnicos').attr("href", "/tecnicos/index/"+cotizacion_id);
-            $('#cerrar_cotizacion_id').val(cotizacion_id);
-            $("#archivo").prop('disabled', false);
-
-            var token = '{{csrf_token()}}';
-            var data = {cotizacion_id: cotizacion_id, _token: token};
-            $.ajax({
-                type: "POST",
-                url: "{{ url('/operaciones/resumedBudget') }}",
-                data: data,
-                success: function (data) {
-                    $("#cotizacion_base").empty();
-                    $("#cotizacion_base").html(data);
-                }
-            });
-
-            var token = '{{csrf_token()}}';
-            var data = {cotizacion_id: cotizacion_id, _token: token};
-            $.ajax({
-                type: "POST",
-                url: "{{ url('/operaciones/getinfoCentros') }}",
-                data: data,
-                success: function (data) {
-                    $("#info_centro").empty();
-                    $("#info_centro").html(data);
-                }
-            });
-
-    			  var token = '{{csrf_token()}}';
-            var data = {cotizacion_id: cotizacion_id, _token: token};
-            $.ajax({
-                type: "POST",
-                url: "{{ url('/operaciones/getBudgetFiles') }}",
-                data: data,
-                success: function (data) {
-                    $("#files").empty();
-                    $("#files").html(data);
-                }
-            });
-
-    			  var token = '{{csrf_token()}}';
-            var data = {cotizacion_id: cotizacion_id, _token: token};
-            $.ajax({
-                type: "POST",
-                url: "{{ url('/operaciones/getTotalCost') }}",
-                data: data,
-                success: function (data) {
-                    $("#gastos_totales").html("Gastos totales: " + data['gasto_total']);
-                }
-            });
-
-    			  var token = '{{csrf_token()}}';
-            var data = {cotizacion_id: cotizacion_id, _token: token};
-            $.ajax({
-                type: "POST",
-                url: "{{ url('/posts/show') }}",
-                data: data,
-                success: function (data) {
-                    $("#posts").empty();
-                    $("#posts").html(data);
-                }
-            });
-        }
-
         $(document).ready(function() {
             var cotizacion_id = $('#cotizacion_id').val();
             var token = '{{csrf_token()}}';
@@ -389,8 +205,6 @@
                 data: data,
                 success: function (data) {
                     $("#empresa_id").val(data.empresa_id);
-                    actualizar_centros(false);
-                    $("#centro_id").val(data.centro_id);
                     actualizar_contactos(false);
                     $("#contacto_id").val(data.contacto_id);
                     $("#nota").val(data.nota);
@@ -426,10 +240,6 @@
 
         $("#empresa_id").change(function (e) {
             e.preventDefault();
-            actualizar_centros(true);
-        });
-
-        $("#centro_id").change(function () {
             actualizar_contactos(true);
         });
 

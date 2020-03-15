@@ -13,7 +13,6 @@
                     <tr>
 			            <th scope="col">#</th>
 			            <th scope="col">Empresa</th>
-			            <th scope="col">Centro</th>
 			            <th scope="col">Contacto</th>
 			            <th scope="col">Fecha Ingreso</th>
 			            <th scope="col">Nota</th>
@@ -28,13 +27,12 @@
 			            <th scope="col">Acciones</th>
 			        </tr>
                 </thead>
-                
+
                 <tbody>
                    @foreach($data as $item)
 			            <tr>
 			                <th scope="row">{{ $item->id }}</th>
 			                <td>{{ $item->empresa->nombre }}</td>
-			                <td>{{ $item->centro->nombre }}</td>
 			                <td>{{ $item->contacto->nombre }}</td>
 			                <td>{{ $item->created_at->toDateString() }}</td>
 			                <td>{{ $item->nota }}</td>
@@ -57,12 +55,11 @@
 			            </tr>
 			        @endforeach
                 </tbody>
-                
+
                 <tfoot>
 	                <tr>
 			            <th scope="col">#</th>
 			            <th scope="col">Empresa</th>
-			            <th scope="col">Centro</th>
 			            <th scope="col">Contacto</th>
 			            <th scope="col">Fecha Ingreso</th>
 			            <th scope="col">Nota</th>

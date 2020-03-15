@@ -25,14 +25,6 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="centro_id" class="col-sm-2 control-label">Centro</label>
-						<div class="col-sm-10">
-							<select name="centro_id" id="centro_id" class="form-control">
-						        <option value="" required>Seleccione un Centro</option>
-						    </select>
-						</div>
-					</div>
-					<div class="form-group">
 						<label for="nombre" class="col-sm-2 control-label">Nombre</label>
 						<div class="col-sm-10">
 							<input type="text" class="form-control" id="nombre" name="nombre" required>
@@ -76,55 +68,4 @@
 			</form>
 		</div>
 	</div>
-@stop
-
-@section('script')
-    <script>
-        $("document").ready(function () {
-            var empresa_id = $('#empresa_id').val();
-            var token = '{{csrf_token()}}';
-            var data = {empresa_id: empresa_id, _token: token};
-
-            $.ajax({
-                type: "post",
-                url: "{{ url('cotizaciones/getCentros/') }}",
-                data: data,
-                success: function (data) {
-                    $("#centro_id").empty();
-                    $("#centro_id").append('<option value="">Seleccione centro</option>');
-                    $.each(data, function(i, item){
-                        $("#centro_id").append('<option value='+data[i].id+'>'+data[i].nombre+'</option>');
-                    })                    
-                    var contact_data = JSON.parse($("#data").val());
-                    $("#centro_id").val(contact_data.centro_id);
-                    $("#nombre").val(contact_data.nombre);
-                    $("#cargo").val(contact_data.cargo);
-                    $("#zona").val(contact_data.zona);
-                    $("#email").val(contact_data.email);
-                    $("#movil").val(contact_data.movil);
-                    $("#oficina").val(contact_data.oficina);
-                }
-            });
-        });
-        
-        $("#empresa_id").change(function (e) {
-            e.preventDefault();
-            var empresa_id = $('#empresa_id').val();
-            var token = '{{csrf_token()}}';
-            var data = {empresa_id: empresa_id, _token: token};
-
-            $.ajax({
-                type: "post",
-                url: "{{ url('cotizaciones/getCentros/') }}",
-                data: data,
-                success: function (data) {
-                    $("#centro_id").empty();
-                    $("#centro_id").append('<option value="">Seleccione centro</option>');
-                    $.each(data, function(i, item){
-                        $("#centro_id").append('<option value='+data[i].id+'>'+data[i].nombre+'</option>');
-                    })
-                }
-            });
-        });
-    </script>
 @stop

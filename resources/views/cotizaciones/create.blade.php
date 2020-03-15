@@ -22,7 +22,7 @@
 
         <form action='{{ url("cotizaciones/") }}' method="POST" class="form-horizontal" id="formulario">
             @csrf
-            <input type="hidden" name="id_unique" id="id_unique" value="{{ $id_unique }}">            
+            <input type="hidden" name="id_unique" id="id_unique" value="{{ $id_unique }}">
             <div class="row">
                 <div class="col-sm-6">
                     <div class="form-group">
@@ -33,15 +33,6 @@
                                 @foreach($empresas as $items)
                                 <option value="{{ $items->id }}">{{ $items->nombre }}</option>
                                 @endforeach
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="nombre" class="col-sm-2 control-label">Centro</label>
-
-                        <div class="col-sm-10">
-                            <select name="centro_id" id="centro_id" class="form-control">
-                                <option value="">Seleccione centro</option>
                             </select>
                         </div>
                     </div>
@@ -198,30 +189,10 @@
 
 @section('script')
     <script>
-        function actualizar_centros(async) {
+        function actualizar_contactos(async) {
             var empresa_id = $('#empresa_id').val();
             var token = '{{csrf_token()}}';
             var data = {empresa_id: empresa_id, _token: token};
-
-            $.ajax({
-                type: "post",
-                url: "{{ url('cotizaciones/getCentros/') }}",
-                data: data,
-                async: async,
-                success: function (data) {
-                    $("#centro_id").empty();
-                    $("#centro_id").append('<option value="">Seleccione centro</option>');
-                    $.each(data, function(i, item){
-                        $("#centro_id").append('<option value='+data[i].id+'>'+data[i].nombre+'</option>');
-                    })
-                }
-            });
-        }
-
-        function actualizar_contactos(async) {
-            var centro_id = $('#centro_id').val();
-            var token = '{{csrf_token()}}';
-            var data = {centro_id: centro_id, _token: token};
 
             $.ajax({
                 type: "post",
@@ -251,8 +222,6 @@
                 data: data,
                 success: function (data) {
                     $("#empresa_id").val(data.empresa_id);
-                    actualizar_centros(false);
-                    $("#centro_id").val(data.centro_id);
                     actualizar_contactos(false);
                     $("#contacto_id").val(data.contacto_id);
                     $("#nota").val(data.nota);
@@ -287,10 +256,6 @@
 
         $("#empresa_id").change(function (e) {
             e.preventDefault();
-            actualizar_centros(true);
-        });
-
-        $("#centro_id").change(function () {
             actualizar_contactos(true);
         });
 

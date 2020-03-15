@@ -23,14 +23,6 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="centro_id" class="col-sm-2 control-label">Centro</label>
-						<div class="col-sm-10">
-							<select name="centro_id" id="centro_id" class="form-control">
-						        <option value="" required>Seleccione un Centro</option>
-						    </select>
-						</div>
-					</div>
-					<div class="form-group">
 						<label for="nombre" class="col-sm-2 control-label">Nombre</label>
 						<div class="col-sm-10">
 							<input type="text" class="form-control" id="nombre" name="nombre" value="{{ old('nombre') }}" required>
@@ -74,33 +66,4 @@
 			</form>
 		</div>
 	</div>
-@stop
-
-@section('script')
-    <script>
-        function actualizar_centros(async) {
-            var empresa_id = $('#empresa_id').val();
-            var token = '{{csrf_token()}}';
-            var data = {empresa_id: empresa_id, _token: token};
-
-            $.ajax({
-                type: "post",
-                url: "{{ url('cotizaciones/getCentros/') }}",
-                data: data,
-                async: async,
-                success: function (data) {
-                    $("#centro_id").empty();
-                    $("#centro_id").append('<option value="">Seleccione centro</option>');
-                    $.each(data, function(i, item){
-                        $("#centro_id").append('<option value='+data[i].id+'>'+data[i].nombre+'</option>');
-                    })
-                }
-            });
-        }
-
-        $("#empresa_id").change(function (e) {
-            e.preventDefault();
-            actualizar_centros(true);
-        });
-    </script>
 @stop

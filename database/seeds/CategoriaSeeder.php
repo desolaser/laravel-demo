@@ -14,12 +14,10 @@ class CategoriaSeeder extends Seeder
     	$sql = "
 	    	INSERT INTO `categorias` (`id`, `nombre`) VALUES
 			(1, 'MANO DE OBRA'),
-			(2, 'MATERIALES E INSUMOS'),
-			(3, 'PRODUCTO EIP'),
-			(4, 'PRODUCTO CV'),
-			(5, 'GASTOS TERRENO/LOGÍSTICA')
+			(2, 'INSUMOS'),
+			(3, 'MATERIALES')
 		";
 
-		DB::select($sql);	
+		DB::select($sql);
     }
 }

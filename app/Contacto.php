@@ -8,7 +8,6 @@ class Contacto extends Model
 {
     protected $fillable = [
         'empresa_id',
-        'centro_id',
         'nombre',
         'cargo',
         'zona',

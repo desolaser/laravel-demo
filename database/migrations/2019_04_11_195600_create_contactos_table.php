@@ -16,7 +16,6 @@ class CreateContactosTable extends Migration
         Schema::create('contactos', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('empresa_id')->unsigned();
-            $table->bigInteger('centro_id')->unsigned();
             $table->string('nombre');
             $table->string('cargo');
             $table->string('zona');
@@ -27,10 +26,6 @@ class CreateContactosTable extends Migration
             $table->foreign('empresa_id')
                 ->references('id')
                 ->on('empresas');
-
-            $table->foreign('centro_id')
-                ->references('id')
-                ->on('centros');
 
             $table->timestamps();
         });

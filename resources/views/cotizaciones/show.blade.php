@@ -13,24 +13,23 @@
             <center><h1>Cotización</h1></center>
             <div class="separator"></div>
             <div class="row company-data" style="padding: 20px">
-                <img src=" {{ asset('img/microwave-logo.png') }}">
+                <img src=" {{ asset('img/logo.png') }}">
                 <p class="company-desc" align="left">
-                    Servicios venta y manutención<br/>
-                    de equipos electrónicos acuícolas.<br/>
-                    Email: underwater.microwave@gmail.com
+                    Servicios de venta de productos del<br/>
+                    rubro X.<br/>
+                    Email: folavarria.test@gmail.com
                 </p>
             </div>
             <div class="client-data">
                 <p class="list-client-data" align="left">
                         Cliente: {{ $data->empresa->nombre }}<br/>
                         Fecha atención: {{ $data->created_at->toDateString() }}<br/>
-                        Centro: {{ $data->centro->nombre }}<br/>
                         Zona: {{ $data->contacto->zona }}<br/>
                         Nota: {{ $data->nota }}<br/>
                 </p>
                 <div class="budget-number">
                     <h1 class="num">N: {{ $data->id }}</h1>
-                </div>  
+                </div>
             </div>
             <br/>
             <br/>
@@ -118,14 +117,14 @@
             </div>
             <div class="row">
                 <p class="list-client-data blue" align="left">
-                        Razón Social: TELECOMUNICACIONES MICROWAVE SPA<br/>
-                        RUT: 76.252.984-K<br/>
-                        Dirección: Ruta 5 Km. 1025 Chinquihue Alto<br/>
-                        Giro: Servicios venta y manutención de equipos<br/>
-                        electrónicos acuícolas<br/>
-                        Ciudad: Puerto Montt<br/>
-                </p> 
-            </div> 
+                        Razón Social: FOLAVARRÍA TEST<br/>
+                        RUT: XX.XXX.XXX-X<br/>
+                        Dirección: Ruta X Km. XXXX<br/>
+                        Giro: Servicios de venta de productos del<br/>
+                        rubro X<br/>
+                        Ciudad: X<br/>
+                </p>
+            </div>
         </div>
     </body>
 </html>

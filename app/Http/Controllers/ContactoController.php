@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\{Contacto, Empresa, Centro, Cotizacion};
+use App\{Contacto, Empresa, Cotizacion};
 use Illuminate\Validation\Rule;
 use DB;
 
@@ -33,7 +33,7 @@ class ContactoController extends Controller
      */
     public function create()
     {
-        $empresas = Empresa::all(); 
+        $empresas = Empresa::all();
         return view('contactos.create', [
             'empresas' => $empresas,
             'titulo' => 'Crear Contactos',
@@ -51,7 +51,6 @@ class ContactoController extends Controller
     {
         $data = $this->validate($request, [
             'empresa_id' => ['required', Rule::in(Empresa::pluck('id'))],
-            'centro_id' => ['required', Rule::in(Centro::pluck('id'))],
             'nombre' => 'required|string|max:255',
             'cargo' => 'required|string|max:255',
             'zona' => 'required|string|max:255',
@@ -64,7 +63,6 @@ class ContactoController extends Controller
         try {
             $contacto = Contacto::create([
                 'empresa_id' => $data['empresa_id'],
-                'centro_id' => $data['centro_id'],
                 'nombre' => $data['nombre'],
                 'cargo' => $data['cargo'],
                 'zona' => $data['zona'],
@@ -79,7 +77,7 @@ class ContactoController extends Controller
         }
 
         return redirect()->route('contactos.index')
-            ->with('success', 'El contacto ha sido registrado exitosamente');        
+            ->with('success', 'El contacto ha sido registrado exitosamente');
     }
 
     /**
@@ -101,7 +99,7 @@ class ContactoController extends Controller
      */
     public function edit(Contacto $contacto)
     {
-        $empresas = Empresa::all(); 
+        $empresas = Empresa::all();
         return view('contactos.edit', [
             'empresas' => $empresas,
             'data' => $contacto,
@@ -118,10 +116,9 @@ class ContactoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Contacto $contacto)
-    {        
+    {
         $data = $this->validate($request, [
             'empresa_id' => ['required', Rule::in(Empresa::pluck('id'))],
-            'centro_id' => ['required', Rule::in(Centro::pluck('id'))],
             'nombre' => 'required|string|max:255',
             'cargo' => 'required|string|max:255',
             'zona' => 'required|string|max:255',
