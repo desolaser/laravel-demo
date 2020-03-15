@@ -18,7 +18,7 @@ $factory->define(Cotizacion::class, function (Faker $faker) {
   		'empresa_id' => $faker->randomElement($empresas),
   		'contacto_id' => $faker->randomElement($contacto),
   		'factura_id' => NULL,
-     	'nota' => $faker->text(),
+     	'nota' => $faker->text(10),
   		'viatico' => $viatico,
   		'sumatoria' => $sumatoria,
   		'descuento' => $descuento,

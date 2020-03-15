@@ -8,10 +8,10 @@ $factory->define(Contacto::class, function (Faker $faker) {
     return [
         'empresa_id' => $faker->randomElement($empresas),
         'nombre' => $faker->name,
-        'cargo' => $faker->text(),
-        'zona' => $faker->text(),
+        'cargo' => $faker->jobTitle,
+        'zona' => $faker->state,
         'email' => $faker->unique()->safeEmail,
         'movil' => $faker->phoneNumber,
-        'oficina' => $faker->text(),
+        'oficina' => $faker->address,
     ];
 });

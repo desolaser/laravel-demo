@@ -11,6 +11,6 @@ class CotizacionSeeder extends Seeder
      */
     public function run()
     {
-      factory(App\Cotizaciones::class, 20)->create();
+      factory(App\Cotizacion::class, 20)->create();
     }
 }

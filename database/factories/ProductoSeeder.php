@@ -11,8 +11,8 @@ $factory->define(Producto::class, function (Faker $faker) {
     return [
         'servicio_id' => $faker->randomElement($servicio),
         'categoria_id' => $faker->randomElement($categoria),
-        'nombre' => $faker->name,
+        'nombre' => $faker->word,
         'unidad' => $faker->randomElement($status),
-        'precio' => $faker->numberBetween(1000, 10000);
+        'precio' => $faker->numberBetween(1000, 10000)
     ];
 });

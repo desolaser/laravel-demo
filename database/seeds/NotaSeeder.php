@@ -11,6 +11,6 @@ class NotaSeeder extends Seeder
      */
     public function run()
     {
-      factory(Nota::class, 5)->create();
+      factory(App\Nota::class, 5)->create();
     }
 }
