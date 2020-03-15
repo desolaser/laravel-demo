@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\{Empresa, Cotizacion, Centro, Contacto, PrecioEmpresa};
+use App\{Empresa, Cotizacion, Contacto, PrecioEmpresa};
 use Illuminate\Http\Request;
 use DB;
 
@@ -12,7 +12,7 @@ class EmpresaController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -22,10 +22,9 @@ class EmpresaController extends Controller
     public function index()
     {
         $data = Empresa::query()
-            ->withCount('centros')
             ->orderBy('nombre')
-            ->get();   
-            
+            ->get();
+
         return view('empresas.index', [
             'empresas' => $data,
             'titulo' => 'Listado de empresas',
@@ -168,15 +167,11 @@ class EmpresaController extends Controller
             foreach ($precios as $item) {
                 $item->delete();
             }
-            $centros = Centro::where('empresa_id', $empresa->id)->get();
-            foreach ($centros as $item) {
-                $item->delete();
-            }
             DB::commit();
         } catch (Exception $e) {
             DB::rollback();
         }
-        
+
         $empresa->delete();
         return redirect()->route('empresas.index')
             ->with('success', 'La empresa ha sido eliminada exitosamente');
