@@ -29,42 +29,40 @@
                         <form action="{{ route('cotizaciones.destroy', $item->id) }}" method="POST">
                             @csrf
                             @method('DELETE')
-                            @if (($role == 'DIGITADOR_CIG' || $role == 'DIGITADOR_CIM' || $role == 'SUPERUSUARIO') &&
-                                    $item->status == 'EN_DISEÑO')
+                            @if ($item->status == 'EN_DISEÑO')
                                 <a class="btn btn-primary" href="{{ url("dashboard/send/{$item->id}") }}">
                                 <i class="icon-shopping-cart icon-large"></i> Enviar a Supervisor</a>
                             @endif
-                            @if (($role == 'DIGITADOR_CIG' || $role == 'DIGITADOR_CIM' || $role == 'SUPERUSUARIO') && ($item->status == 'EN_DISEÑO' || $item->status == 'EN_VALIDACIÓN')
-                                    || ($role == 'SUPERVISOR' && $item->status == 'EN_VALIDACIÓN'))
+                            @if (($item->status == 'EN_DISEÑO' || $item->status == 'EN_VALIDACIÓN')
+                                    || $item->status == 'EN_VALIDACIÓN')
                                 <a href="{{ route('cotizaciones.edit', $item->id) }}" class="btn btn-outline-secondary btn-sm">
                                     <span class="oi oi-eye"></span>
                                 </a>
                             @endif
-                            @if (($role == 'SUPERVISOR' || $role == 'SUPERUSUARIO') && $item->status == 'EN_VALIDACIÓN')
+                            @if ($item->status == 'EN_VALIDACIÓN')
                                 <a class="btn btn-primary" href="{{ url("dashboard/aprove/{$item->id}") }}">
                                 <i class="icon-shopping-cart icon-large"></i> Aprobar</a>
                             @endif
-                            @if (($role == 'SUPERVISOR' || $role == 'SUPERUSUARIO') && $item->status == 'EN_VALIDACIÓN')
+                            @if ($item->status == 'EN_VALIDACIÓN')
                                 <a class="btn btn-danger" href="{{ url("dashboard/cancel/{$item->id}") }}">
                                 <i class="icon-shopping-cart icon-large"></i> Anular</a>
                             @endif
-                            @if (($role == 'DIGITADOR' || $role == 'SUPERUSUARIO') && $item->status == 'EVALUACIÓN_CLIENTE')
+                            @if ($item->status == 'EVALUACIÓN_CLIENTE')
                                 <a class="btn btn-danger" href="{{ url("dashboard/reject/{$item->id}") }}">
                                 <i class="icon-shopping-cart icon-large"></i> Rechazar</a>
                             @endif
-                            @if (($role == 'DIGITADOR_CIG' || $role == 'DIGITADOR_CIM' || $role == 'SUPERUSUARIO') && $item->status == 'POR_ENVIAR')
+                            @if ($item->status == 'POR_ENVIAR')
                                 <a class="btn btn-warning" href="{{ url("sendPdf/{$item->id}") }}">
                                 <i class="icon-shopping-cart icon-large"></i> Env.Correo/PDF</a>
                                 <button type="button" name="special" class="btn btn-primary btn-sm" data-id="{{ $item->id }}" data-toggle="modal" data-target="#modal-adjuntos">
                                     <i class="fa fa-search"></i> Cotización Especial</a>
                                 </button>
                             @endif
-                            @if (($role == 'DIGITADOR_CIG' || $role == 'DIGITADOR_CIM' || $role == 'SUPERUSUARIO') && $item->status == 'EVALUACIÓN_CLIENTE')
+                            @if ($item->status == 'EVALUACIÓN_CLIENTE')
                                 <a class="btn btn-success" href="{{ url("dashboard/operations/{$item->id}") }}">
                                 <i class="icon-shopping-cart icon-large"></i> A operaciones</a>
                             @endif
-                            @if ($item->status == 'EVALUACIÓN_CLIENTE' ||
-                                    (($role == 'DIGITADOR_CIG' || $role == 'DIGITADOR_CIM') && $item->status == 'POR_ENVIAR'))
+                            @if ($item->status == 'EVALUACIÓN_CLIENTE' || $item->status == 'POR_ENVIAR')
                                 <a class="btn btn-info" href="{{ url("pdf/{$item->id}") }}">
                                 <i class="icon-shopping-cart icon-large"></i> Ver pdf</a>
                             @endif

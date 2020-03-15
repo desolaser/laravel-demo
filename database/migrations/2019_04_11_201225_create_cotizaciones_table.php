@@ -16,7 +16,6 @@ class CreateCotizacionesTable extends Migration
         Schema::create('cotizaciones', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('empresa_id')->unsigned();
-            $table->bigInteger('centro_id')->unsigned();
             $table->bigInteger('contacto_id')->unsigned();
             $table->bigInteger('factura_id')->unsigned()->nullable();
             $table->text('nota')->nullable();
@@ -34,10 +33,6 @@ class CreateCotizacionesTable extends Migration
             $table->foreign('empresa_id')
                 ->references('id')
                 ->on('empresas');
-
-            $table->foreign('centro_id')
-                ->references('id')
-                ->on('centros');
 
             $table->foreign('contacto_id')
                 ->references('id')
