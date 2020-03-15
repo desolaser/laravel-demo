@@ -73,9 +73,9 @@ desired effect
     <!-- Logo -->
     <a href="{{ url('/') }}" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>M</b></span>
+      <span class="logo-mini"><b>L</b></span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>Microwave</b> SpA</span>
+      <span class="logo-lg"><b>Laravel</b> Demo</span>
     </a>
 
     <!-- Header Navbar -->
@@ -160,9 +160,9 @@ desired effect
               </li> -->
               <!-- Menu Footer-->
               <li class="user-footer">
-        <!--        <div class="pull-left">
+                <div class="pull-left">
                   <a href="#" class="btn btn-default btn-flat">Profile</a>
-                </div> -->
+                </div>
                 <div class="pull-right">
                   <a href="{{ route('logout') }} " class="btn btn-default btn-flat" >Sign out</a>
                 </div>
@@ -215,8 +215,6 @@ desired effect
         <li><a href="{{ url('/empresas') }}"><i class="fa fa-link"></i> <span>Empresas</span></a></li>
         <li><a href="{{ url('/centros') }}"><i class="fa fa-link"></i> <span>Centros</span></a></li>
         -->
-        @if (Auth::user()->role == 'SUPERUSUARIO' ||
-            Auth::user()->role == 'DIGITADOR_CIM' || Auth::user()->role == 'DIGITADOR_CIG')
           <li class="treeview">
             <a href="#"><i class="fa fa-link"></i> <span>Clientes</span>
               <span class="pull-right-container">
@@ -229,8 +227,6 @@ desired effect
               <li><a href="{{ url('/contactos') }}">Contactos</a></li>
             </ul>
           </li>
-        @endif
-        @if (Auth::user()->role == 'SUPERUSUARIO')
           <li class="treeview">
             <a href="#"><i class="fa fa-link"></i> <span>Servicios</span>
               <span class="pull-right-container">
@@ -244,9 +240,6 @@ desired effect
                 <li><a href="{{ url('/precios') }} ">Precios por Empresas</a></li>
             </ul>
           </li>
-        @endif
-        @if (Auth::user()->role == 'SUPERUSUARIO' || Auth::user()->role == 'SUPERVISOR' ||
-            Auth::user()->role == 'DIGITADOR_CIM' || Auth::user()->role == 'DIGITADOR_CIG')
           <li class="treeview">
             <a href="#"><i class="fa fa-link"></i> <span>Cotizaciones</span>
               <span class="pull-right-container">
@@ -257,11 +250,8 @@ desired effect
               <li><a href="{{ url('/cotizaciones/create') }} ">Nueva cotización</a></li>
               <li><a href="{{ url('/notas') }} ">Notas</a></li>
               <li><a href="{{ url('/cotizaciones') }} ">Todas las cotizaciones</a></li>
-              <li><a href="{{ url('/seguimiento') }} ">Seguimiento</a></li>
             </ul>
           </li>
-        @endif
-        @if (Auth::user()->role == 'SUPERUSUARIO')
           <li class="treeview">
             <a href="#"><i class="fa fa-link"></i> <span>Usuarios</span>
               <span class="pull-right-container">
@@ -272,7 +262,6 @@ desired effect
               <li><a href="{{ url('users') }} ">Añadir Usuarios</a></li>
             </ul>
           </li>
-        @endif
         <li class="treeview">
             <a href="#"><i class="fa fa-link"></i> <span>Facturación</span>
               <span class="pull-right-container">
@@ -327,7 +316,7 @@ desired effect
       &nbsp
     </div>
     <!-- Default to the left -->
-    <strong>Copyright &copy; 2019 <a href="#">Microwave SpA</a>.</strong> All rights reserved.
+    <strong>Copyright &copy; 2019 <a href="#">Laravel Demo</a>.</strong> All rights reserved.
   </footer>
 
   <!-- Control Sidebar -->
