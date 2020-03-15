@@ -223,7 +223,6 @@ desired effect
             </a>
             <ul class="treeview-menu">
               <li><a href="{{ url('/empresas') }}">Empresas</a></li>
-              <li><a href="{{ url('/centros') }}">Centros</a></li>
               <li><a href="{{ url('/contactos') }}">Contactos</a></li>
             </ul>
           </li>
