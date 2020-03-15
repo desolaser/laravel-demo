@@ -87,18 +87,17 @@
             <center><h1>Cotización</h1></center>
             <div class="separator"></div>
             <div class="company-data">
-                <img src="../resources/views/pdf/microwave-logo.png" style="padding-top: 25px;">
+                <img src="../resources/views/pdf/logo.png" style="padding-top: 25px;">
                 <p class="company-desc" align="left">
-                    Servicios venta y mantención<br/>
-                    de equipos electrónicos acuícolas.<br/>
-                    Email: cotizaciones.microwave@gmail.com
+                    Servicios de ventas de productos<br/>
+                    del rubro X.<br/>
+                    Email: folavarria.test@gmail.com
                 </p>
             </div>
             <div class="client-data">
             <p class="list-client-data" align="left">
                 Cliente: {{ $data->empresa->nombre }}<br/>
                 Fecha atención: {{ $data->created_at->toDateString() }}<br/>
-                Centro: {{ $data->centro->nombre }}<br/>
                 Zona: {{ $data->contacto->zona }}<br/>
                 Nota: {{ $data->nota }}<br/>
             </p>
@@ -124,7 +123,7 @@
                         <th width="100px">Total</th>
                     </tr>
                 </thead>
-                <tbody>                    
+                <tbody>
                     @php
                         $i=1;
                         $x = 1;
@@ -193,12 +192,12 @@
             <div class="saltopagina">
             </div>
             <p class="list-company-data" align="left">
-                <b>Razón Social</b>: TELECOMUNICACIONES MICROWAVE SPA<br/>
-                <b>RUT</b>: 76.252.984-K<br/>
-                <b>Dirección</b>: Ruta 5 Km. 1028 Chinquihue Alto<br/>
-                <b>Giro</b>: Servicios venta y mantención de equipos<br/>
-                electrónicos acuícolas<br/>
-                <b>Ciudad</b>: Puerto Montt<br/>
+                <b>Razón Social/b>: LARAVEL TEST<br/>
+                <b>RUT</b>: XX.XXX.XXX-X<br/>
+                <b>Dirección</b>: Ruta X Km. X<br/>
+                <b>Giro</b>: Servicios de ventas de productos<br/>
+                del rubro X.<br/>
+                <b>Ciudad</b>: Ciudad X<br/>
             </p>
         </div>
     </body>
