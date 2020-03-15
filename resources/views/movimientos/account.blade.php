@@ -26,8 +26,8 @@
                             <td>{{ $item['saldo'] }}</td>
                             <td>
                                 @if($item['factura_id'] != NULL)
-                                    <a class="btn btn-primary" href="{{ url("facturas/{$item['numero_factura_sii']}") }}">
-                                    <i class="icon-shopping-cart icon-large"></i>Factura número {{ $item['id'] }}</a>
+                                    <a class="btn btn-primary" href="{{ url("facturas/{$item['id']}") }}">
+                                    <i class="icon-shopping-cart icon-large"></i>Factura número {{ $item['numero_factura_sii'] }}</a>
                                 @else
                                     <a class="btn btn-primary" href="{{ url("transferencias/{$item['transferencia_id']}") }}">
                                     <i class="icon-shopping-cart icon-large"></i>Transferencia {{ $item['transferencia_id'] }}</a>
