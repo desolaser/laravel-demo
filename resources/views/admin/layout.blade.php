@@ -274,19 +274,6 @@ desired effect
           </li>
         @endif
         <li class="treeview">
-            <a href="#"><i class="fa fa-link"></i> <span>Operaciones</span>
-              <span class="pull-right-container">
-                  <i class="fa fa-angle-left pull-right"></i>
-                </span>
-            </a>
-            <ul class="treeview-menu">
-              <li><a href="{{ url('/operaciones') }} ">Central Operaciones</a></li>
-              @if (Auth::user()->role == 'SUPERUSUARIO')
-                <li><a href="{{ url('/trabajadores') }} ">Añadir trabajadores</a></li>
-              @endif
-            </ul>
-        </li>
-        <li class="treeview">
             <a href="#"><i class="fa fa-link"></i> <span>Facturación</span>
               <span class="pull-right-container">
                   <i class="fa fa-angle-left pull-right"></i>
@@ -314,7 +301,7 @@ desired effect
       </h1>
     </section>
 
-    
+
 
     <!-- Main content -->
     <section class="content container-fluid">
