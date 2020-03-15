@@ -13,11 +13,10 @@ class CategoriaSeeder extends Seeder
     {
     	$sql = "
 	    	INSERT INTO `categorias` (`id`, `nombre`) VALUES
-			(1, 'MANO DE OBRA'),
-			(2, 'INSUMOS'),
-			(3, 'MATERIALES')
-		";
-
-		DB::select($sql);
+			  (1, 'MANO DE OBRA'),
+			  (2, 'INSUMOS'),
+			  (3, 'MATERIALES')
+		  ";
+		  DB::select($sql);
     }
 }
