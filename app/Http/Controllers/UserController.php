@@ -49,12 +49,12 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {        
+    {
         $data = $this->validate($request, [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'role' => ['required', Rule::in(['DIGITADOR_CIM', 'DIGITADOR_CIG',
-                'DIGITADOR_IM', 'DIGITADOR_DT', 'SUPERVISOR', 'SUPERUSUARIO'])],
+            'role' => ['required', Rule::in(['OPERARIO', 'SUPERVISOR',
+                'SUPERUSUARIO'])],
             'password' => 'required|string|min:8',
         ]);
 
@@ -77,14 +77,19 @@ class UserController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified profile.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        //
+        $user = User::find($id);
+        return view('users.show', [
+            'data' => $user,
+            'titulo' => 'Perfil',
+            'descripcion' => 'Datos de usuario'
+        ]);
     }
 
     /**
@@ -114,14 +119,38 @@ class UserController extends Controller
         $data = $this->validate($request, [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255',
-            'role' => ['required', Rule::in(['DIGITADOR_CIM', 'DIGITADOR_CIG',
-                'DIGITADOR_IM', 'DIGITADOR_DT', 'SUPERVISOR', 'SUPERUSUARIO'])],
+            'role' => ['required', Rule::in(['OPERARIO', 'SUPERVISOR',
+                'SUPERUSUARIO'])],
             'password' => 'required|string|min:8',
         ]);
         $data['password'] = Hash::make($data['password']);
         $user->update($data);
         return redirect()->route('users.index')
             ->with('success', 'El usuario ha sido editado exitosamente');
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\User  $user
+     * @return \Illuminate\Http\Response
+     */
+    public function update_profile(Request $request, User $user)
+    {
+        if (strcmp($request['password'], $request['verify_password']) != 0) {
+            return redirect()->back()
+                ->with('warning', 'Ambas contraseñas son distintas');
+        }
+        $data = $this->validate($request, [
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255',
+            'password' => 'required|string|min:8',
+        ]);
+        $data['password'] = Hash::make($data['password']);
+        $user->update($data);
+        return redirect()->back()
+            ->with('success', 'El perfil ha sido editado exitosamente');
     }
 
     /**

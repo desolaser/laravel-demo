@@ -26,11 +26,8 @@
 						<label for="categoria" class="col-sm-2 control-label">Cargo</label>
 						<div class="col-sm-10">
                             <select class="form-control" id="role" name="role">
-								<option value="">Seleccione el Rol</option>								
-                                <option value="DIGITADOR_CIG" {{ old('role', $data->role == 'DIGITADOR_CIG') ? 'selected' : ''}}>Digitador CIG</option>
-                                <option value="DIGITADOR_CIM" {{ old('role', $data->role == 'DIGITADOR_CIM') ? 'selected' : ''}}>Digitador CIM</option>
-                                <option value="DIGITADOR_IM" {{ old('role', $data->role == 'DIGITADOR_IM') ? 'selected' : ''}}>Digitador IM</option>
-                                <option value="DIGITADOR_DT" {{ old('role', $data->role == 'DIGITADOR_DT') ? 'selected' : ''}}>Digitador DT</option>
+								<option value="">Seleccione el Rol</option>
+                                <option value="OPERARIO" {{ old('role', $data->role == 'OPERARIO') ? 'selected' : ''}}>Operario</option>
                                 <option value="SUPERVISOR" {{ old('role', $data->role == 'SUPERVISOR') ? 'selected' : ''}}>Supervisor</option>
                                 <option value="SUPERUSUARIO" {{ old('role', $data->role == 'SUPERUSUARIO') ? 'selected' : ''}}>Super Usuario</option>
                             </select>

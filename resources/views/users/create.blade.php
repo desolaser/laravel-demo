@@ -26,10 +26,7 @@
 						<div class="col-sm-10">
                             <select class="form-control" id="role" name="role">
                                 <option value="" required>Seleccione un Rol</option>
-                                <option value="DIGITADOR_CIG">Digitador CIG</option>
-                                <option value="DIGITADOR_CIM">Digitador CIM</option>
-                                <option value="DIGITADOR_IM">Digitador IM</option>
-                                <option value="DIGITADOR_DT">Digitador DT</option>
+                                <option value="OPERARIO">OPERARIO</option>
                                 <option value="SUPERVISOR">Supervisor</option>
                                 <option value="SUPERUSUARIO">Super Usuario</option>
                             </select>

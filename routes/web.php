@@ -47,6 +47,7 @@ Route::resource('/productos','ProductoController');
 Route::resource('/notas','NotaController');
 
 Route::resource('/users','UserController');
+Route::match(['put', 'patch', 'get'], '/users/update_profile/{user}', 'UserController@update_profile');
 
 Route::resource('/seguimiento', 'SeguimientoController');
 
